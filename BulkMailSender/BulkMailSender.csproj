@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A18E3554-ED76-4A98-A052-7DF3C6E5AD5A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>BulkMailSender</RootNamespace>
+    <AssemblyName>BulkMailSender</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationModule.cs" />
+    <Compile Include="Components\AppService.cs" />
+    <Compile Include="Components\Editor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Editor.designer.cs">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\EditorForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\EditorForm.designer.cs">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\ESchedulerState.cs" />
+    <Compile Include="Components\IAppService.cs" />
+    <Compile Include="Components\IJobsScheduler.cs" />
+    <Compile Include="Components\IStateProvider.cs" />
+    <Compile Include="Components\JobDescriptor.cs" />
+    <Compile Include="Components\JobsScheduler.cs" />
+    <Compile Include="Components\TextInsertForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\TextInsertForm.designer.cs">
+      <DependentUpon>TextInsertForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Dialogs\EditDestinatario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\EditDestinatario.Designer.cs">
+      <DependentUpon>EditDestinatario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\EditText.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\EditText.Designer.cs">
+      <DependentUpon>EditText.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\InputBox.Designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\LinkDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\LinkDialog.designer.cs">
+      <DependentUpon>LinkDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SearchDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SearchDialog.Designer.cs">
+      <DependentUpon>SearchDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ConfirmBox.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Smtp\SmartMailer.cs" />
+    <Compile Include="Views\JobsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\JobsView.Designer.cs">
+      <DependentUpon>JobsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MailsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\MailsView.designer.cs">
+      <DependentUpon>MailsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecipientiView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\RecipientiView.Designer.cs">
+      <DependentUpon>RecipientiView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SmptView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\SmptView.Designer.cs">
+      <DependentUpon>SmptView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Smtp\SmtpConnectorBase.cs" />
+    <Compile Include="Smtp\SmtpConnectorWithoutSsl.cs" />
+    <Compile Include="Smtp\SmtpConnectorWithSsl.cs" />
+    <Compile Include="Views\ViewBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <EmbeddedResource Include="Components\Editor.resx">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\EditorForm.resx">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\TextInsertForm.resx">
+      <DependentUpon>TextInsertForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\EditDestinatario.dje.resx">
+      <DependentUpon>EditDestinatario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\EditDestinatario.resx">
+      <DependentUpon>EditDestinatario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\EditText.resx">
+      <DependentUpon>EditText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\LinkDialog.resx">
+      <DependentUpon>LinkDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SearchDialog.resx">
+      <DependentUpon>SearchDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Views\JobsView.resx">
+      <DependentUpon>JobsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MailsView.resx">
+      <DependentUpon>MailsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RecipientiView.resx">
+      <DependentUpon>RecipientiView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SmptView.resx">
+      <DependentUpon>SmptView.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BulkMailSender.Core\BulkMailSender.Core.csproj">
+      <Project>{3789c3a6-8e65-4e2f-bfa8-ee476cdc6f44}</Project>
+      <Name>BulkMailSender.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="MSHTML">
+      <Guid>{3050F1C5-98B5-11CF-BB82-00AA00BDCE0B}</Guid>
+      <VersionMajor>4</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>True</Private>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\backcolor.bmp" />
+    <Content Include="Resources\bold.bmp" />
+    <Content Include="Resources\cj.bmp" />
+    <Content Include="Resources\color.bmp" />
+    <Content Include="Resources\fj.bmp" />
+    <Content Include="Resources\image.png" />
+    <Content Include="Resources\indent.bmp" />
+    <Content Include="Resources\italic.bmp" />
+    <Content Include="Resources\link.bmp" />
+    <Content Include="Resources\lj.bmp" />
+    <Content Include="Resources\ol.bmp" />
+    <Content Include="Resources\outdent.bmp" />
+    <Content Include="Resources\right_arrow.bmp" />
+    <Content Include="Resources\rj.bmp" />
+    <Content Include="Resources\switch.jpg" />
+    <Content Include="Resources\underscore.bmp" />
+    <Content Include="Resources\uol.bmp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
