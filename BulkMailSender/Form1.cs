@@ -29,6 +29,7 @@ namespace BulkMailSender
       recipientiView1.Initialize(appRepo, appSvc);
       mailsView1.Initialize(appRepo, appSvc);
       jobsView1.Initialize(appRepo, appSvc);
+      panel1.Visible = false;
     }
 
     private void Form1_FormClosing(object sender, FormClosingEventArgs e)

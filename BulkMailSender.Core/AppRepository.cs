@@ -92,7 +92,7 @@ namespace BulkMailSender.Core
       using (var db = new LiteDatabase(_dbPath))
       {
         var col = db.GetCollection<Destinatario>(nameof(Destinatario));
-        return col.Query().Where(x => x.IdRecipiente == idRecipiente).OrderBy(x => x.Mail.ToLower()).ToList();
+        return col.Query().Where(x => x.IdRecipiente == idRecipiente).OrderBy(x => x.Address.ToLower()).ToList();
       }
     }
 
@@ -183,7 +183,7 @@ namespace BulkMailSender.Core
       }
     }
 
-    public void UpdateMail(string idMail, string subj, string html)
+    public void UpdateMail(string idMail, string subj, string html, string plainText)
     {
       using (var db = new LiteDatabase(_dbPath))
       {
@@ -193,6 +193,7 @@ namespace BulkMailSender.Core
         {
           mail.Subject = subj;
           mail.HtmlBody = html;
+          mail.PlaintTextBody = plainText;
           col.Update(mail);
         }
       }
@@ -242,7 +243,7 @@ namespace BulkMailSender.Core
       using (var db = new LiteDatabase(_dbPath))
       {
         var col = db.GetCollection<MailToSend>(nameof(MailToSend));
-        return col.Query().Where(x => x.IdJob == jobId).OrderBy(x => x.Mail.ToLower()).ToList();
+        return col.Query().Where(x => x.IdJob == jobId).OrderBy(x => x.Address.ToLower()).ToList();
       }
     }
 
@@ -252,7 +253,7 @@ namespace BulkMailSender.Core
       {
         var col = db.GetCollection<MailToSend>(nameof(MailToSend));
         return col.Query().Where(x => x.IdJob == jobId && x.State == state)
-          .OrderBy(x => x.Mail.ToLower()).ToList();
+          .OrderBy(x => x.Address.ToLower()).ToList();
       }
     }
 
@@ -282,6 +283,27 @@ namespace BulkMailSender.Core
             m.MessaggioErrore = mail.MessaggioErrore;
           col.Update(m);
         }
+      }
+    }
+
+    public void RemoveJob(string idJob)
+    {
+      using (var db = new LiteDatabase(_dbPath))
+      {
+        var colMailToSend = db.GetCollection<MailToSend>(nameof(MailToSend));
+        var n = colMailToSend.DeleteMany(x => x.IdJob == idJob);
+
+        var col = db.GetCollection<SenderJob>(nameof(SenderJob));
+        col.Delete(idJob);
+      }
+    }
+
+    public void RemoveMailOfJob(string id)
+    {
+      using (var db = new LiteDatabase(_dbPath))
+      {
+        var col = db.GetCollection<MailToSend>(nameof(MailToSend));
+        col.Delete(id);
       }
     }
 

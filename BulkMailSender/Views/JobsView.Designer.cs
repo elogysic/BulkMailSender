@@ -36,6 +36,7 @@
       this.btnSelectAll = new System.Windows.Forms.Button();
       this.btnSetState = new System.Windows.Forms.Button();
       this.label1 = new System.Windows.Forms.Label();
+      this.btnEliminaNonPresenti = new System.Windows.Forms.Button();
       this.btnEliminaRecipiente = new System.Windows.Forms.Button();
       this.btnNuovo = new System.Windows.Forms.Button();
       this.lbState = new System.Windows.Forms.Label();
@@ -43,16 +44,17 @@
       this.treeView1 = new System.Windows.Forms.TreeView();
       this.splitContainer2 = new System.Windows.Forms.SplitContainer();
       this.dataGridView1 = new System.Windows.Forms.DataGridView();
-      this.tbLog = new System.Windows.Forms.TextBox();
-      this.panel2 = new System.Windows.Forms.Panel();
-      this.label2 = new System.Windows.Forms.Label();
-      this.btnStartStopJob = new System.Windows.Forms.Button();
-      this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.Selezionato = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       this.Mail = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.StatoStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.UltimoTentativoInvio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.tbLog = new System.Windows.Forms.TextBox();
+      this.panel2 = new System.Windows.Forms.Panel();
+      this.label2 = new System.Windows.Forms.Label();
+      this.btnStartStopJob = new System.Windows.Forms.Button();
+      this.timer1 = new System.Windows.Forms.Timer(this.components);
+      this.btnClearLog = new System.Windows.Forms.Button();
       this.panel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
@@ -74,6 +76,8 @@
       this.panel1.Controls.Add(this.btnSelectAll);
       this.panel1.Controls.Add(this.btnSetState);
       this.panel1.Controls.Add(this.label1);
+      this.panel1.Controls.Add(this.btnEliminaNonPresenti);
+      this.panel1.Controls.Add(this.btnClearLog);
       this.panel1.Controls.Add(this.btnEliminaRecipiente);
       this.panel1.Controls.Add(this.btnNuovo);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -139,6 +143,18 @@
       this.label1.Size = new System.Drawing.Size(87, 23);
       this.label1.TabIndex = 2;
       this.label1.Text = "Jobs invio";
+      // 
+      // btnEliminaNonPresenti
+      // 
+      this.btnEliminaNonPresenti.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnEliminaNonPresenti.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.btnEliminaNonPresenti.Location = new System.Drawing.Point(473, 4);
+      this.btnEliminaNonPresenti.Name = "btnEliminaNonPresenti";
+      this.btnEliminaNonPresenti.Size = new System.Drawing.Size(89, 57);
+      this.btnEliminaNonPresenti.TabIndex = 0;
+      this.btnEliminaNonPresenti.Text = "Elimina\r\nnon presenti";
+      this.btnEliminaNonPresenti.UseVisualStyleBackColor = true;
+      this.btnEliminaNonPresenti.Click += new System.EventHandler(this.btnEliminaNonPresenti_Click);
       // 
       // btnEliminaRecipiente
       // 
@@ -235,12 +251,54 @@
       this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridView1.Location = new System.Drawing.Point(0, 0);
       this.dataGridView1.Name = "dataGridView1";
-      this.dataGridView1.RowHeadersVisible = false;
       dataGridViewCellStyle1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle1;
       this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
       this.dataGridView1.Size = new System.Drawing.Size(771, 343);
       this.dataGridView1.TabIndex = 1;
+      this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
+      this.dataGridView1.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseDoubleClick);
+      // 
+      // Selezionato
+      // 
+      this.Selezionato.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+      this.Selezionato.DataPropertyName = "Selezionato";
+      this.Selezionato.HeaderText = "Sel.";
+      this.Selezionato.Name = "Selezionato";
+      this.Selezionato.Width = 60;
+      // 
+      // Mail
+      // 
+      this.Mail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+      this.Mail.DataPropertyName = "Address";
+      this.Mail.HeaderText = "Mail";
+      this.Mail.Name = "Mail";
+      this.Mail.ReadOnly = true;
+      // 
+      // Nome
+      // 
+      this.Nome.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+      this.Nome.DataPropertyName = "Nome";
+      this.Nome.HeaderText = "Nome";
+      this.Nome.Name = "Nome";
+      this.Nome.ReadOnly = true;
+      // 
+      // StatoStr
+      // 
+      this.StatoStr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+      this.StatoStr.DataPropertyName = "StatoStr";
+      this.StatoStr.HeaderText = "Stato";
+      this.StatoStr.Name = "StatoStr";
+      this.StatoStr.ReadOnly = true;
+      // 
+      // UltimoTentativoInvio
+      // 
+      this.UltimoTentativoInvio.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+      this.UltimoTentativoInvio.DataPropertyName = "UltimoTentativoInvioStr";
+      this.UltimoTentativoInvio.HeaderText = "Ultimo Invio";
+      this.UltimoTentativoInvio.Name = "UltimoTentativoInvio";
+      this.UltimoTentativoInvio.ReadOnly = true;
+      this.UltimoTentativoInvio.Width = 140;
       // 
       // tbLog
       // 
@@ -293,46 +351,16 @@
       this.timer1.Interval = 500;
       this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
       // 
-      // Selezionato
+      // btnClearLog
       // 
-      this.Selezionato.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-      this.Selezionato.DataPropertyName = "Selezionato";
-      this.Selezionato.HeaderText = "Sel.";
-      this.Selezionato.Name = "Selezionato";
-      this.Selezionato.Width = 60;
-      // 
-      // Mail
-      // 
-      this.Mail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-      this.Mail.DataPropertyName = "Mail";
-      this.Mail.HeaderText = "Mail";
-      this.Mail.Name = "Mail";
-      this.Mail.ReadOnly = true;
-      // 
-      // Nome
-      // 
-      this.Nome.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-      this.Nome.DataPropertyName = "Nome";
-      this.Nome.HeaderText = "Nome";
-      this.Nome.Name = "Nome";
-      this.Nome.ReadOnly = true;
-      // 
-      // StatoStr
-      // 
-      this.StatoStr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-      this.StatoStr.DataPropertyName = "StatoStr";
-      this.StatoStr.HeaderText = "Stato";
-      this.StatoStr.Name = "StatoStr";
-      this.StatoStr.ReadOnly = true;
-      // 
-      // UltimoTentativoInvio
-      // 
-      this.UltimoTentativoInvio.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-      this.UltimoTentativoInvio.DataPropertyName = "UltimoTentativoInvioStr";
-      this.UltimoTentativoInvio.HeaderText = "Ultimo Invio";
-      this.UltimoTentativoInvio.Name = "UltimoTentativoInvio";
-      this.UltimoTentativoInvio.ReadOnly = true;
-      this.UltimoTentativoInvio.Width = 140;
+      this.btnClearLog.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.btnClearLog.Location = new System.Drawing.Point(169, 30);
+      this.btnClearLog.Name = "btnClearLog";
+      this.btnClearLog.Size = new System.Drawing.Size(75, 33);
+      this.btnClearLog.TabIndex = 0;
+      this.btnClearLog.Text = "Clear log";
+      this.btnClearLog.UseVisualStyleBackColor = true;
+      this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
       // 
       // JobsView
       // 
@@ -385,5 +413,7 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn Nome;
     private System.Windows.Forms.DataGridViewTextBoxColumn StatoStr;
     private System.Windows.Forms.DataGridViewTextBoxColumn UltimoTentativoInvio;
+    private System.Windows.Forms.Button btnEliminaNonPresenti;
+    private System.Windows.Forms.Button btnClearLog;
   }
 }

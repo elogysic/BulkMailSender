@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,8 +41,8 @@ namespace BulkMailSender.Views
       base.AfterInitialized();
 
       cbStati.Items.Clear();
-      foreach (var v in Enum.GetValues(typeof(EMailState)))
-        cbStati.Items.Add(v);
+      foreach (EMailState v in Enum.GetValues(typeof(EMailState)))
+        cbStati.Items.Add(new ComboboxItem<EMailState>(v,v.DescriptionAttr()));
 
       cbStati.SelectedIndex = 0;
 
@@ -71,7 +72,8 @@ namespace BulkMailSender.Views
             m.State = args.MailSend.State;
             dataGridView1.Refresh();
           }
-          tbLog.AppendText($"{DateTime.Now:T} - send..." + Environment.NewLine);
+          tbLog.AppendText($"{DateTime.Now:T} - inviata a [{args.MailSend.Address}] - "+args.MailSend.State.DescriptionAttr()
+                           + Environment.NewLine);
         });
       }
     }
@@ -102,18 +104,18 @@ namespace BulkMailSender.Views
       }
       else
       {
-        var list = AppRepo.GetMailsDelJob(CurrentJobId).OrderBy(x => x.Mail.ToLower()).ToList();
+        var list = AppRepo.GetMailsDelJob(CurrentJobId).OrderBy(x => x.Address?.ToLower()).ToList();
 
         var destinatari = AppSvc.GetDestinatariDelRecipienteCorrente();
         list.AddRange(destinatari.Select(x => new MailToSend()
         {
           Id = Guid.NewGuid().ToString("N"),
-          Mail = x.Mail,
+          Address = x.Address,
           Nome = x.Nome,
           IdJob = CurrentJobId
         }));
 
-        var lookup = list.ToLookup(x => x.Mail.ToLower());
+        var lookup = list.ToLookup(x => x.Address?.ToLower());
         lookup.Where(x => x.Count() > 1)
           .ToList()
           .ForEach(x =>
@@ -126,6 +128,28 @@ namespace BulkMailSender.Views
         dataGridView1.DataSource = _elencoMailInInvio;
       }
     }
+
+    private void btnEliminaNonPresenti_Click(object sender, EventArgs e)
+    {
+      var destinatari = AppSvc.GetDestinatariDelRecipienteCorrente();
+      List<MailToSend> toRemove = new List<MailToSend>();
+      foreach (var mailToSend in _elencoMailInInvio)
+      {
+        if (!destinatari.Any(x => x.Address?.ToLower() == mailToSend.Address?.ToLower()))
+          toRemove.Add(mailToSend);
+      }
+
+      foreach (var m in toRemove)
+      {
+        AppRepo.RemoveMailOfJob(m.Id);
+        _elencoMailInInvio.Remove(m);
+      }
+
+      dataGridView1.DataSource = null;
+      dataGridView1.DataSource = _elencoMailInInvio;
+      //dataGridView1.Refresh();
+    }
+
 
     private void btnNuovo_Click(object sender, EventArgs e)
     {
@@ -153,7 +177,7 @@ namespace BulkMailSender.Views
         if (ConfirmBox.Execute("Sicuro di voler eliminare il job?", "Conferma"))
         {
 
-          AppRepo.RemoveRecipiente(id);
+          AppRepo.RemoveJob(id);
           var n = treeView1.SelectedNode;
           treeView1.SelectedNode = n.NextNode ?? n.PrevNode;
           n.Remove();
@@ -195,6 +219,8 @@ namespace BulkMailSender.Views
       foreach (var mailToSend in _elencoMailInInvio.Where(x => !x.State.HasValue))
         mailToSend.State = EMailState.DaInviare;
       Update();
+      tbLog.AppendText("Start job invio..."+Environment.NewLine);
+
       AppRepo.UpdateMailsToSendOfJob(CurrentJobId,_elencoMailInInvio);
       var cfg = AppRepo.LoadSmtpConfig();
       _scheduler.StartJob(CurrentJobId, cfg);
@@ -285,7 +311,7 @@ namespace BulkMailSender.Views
 
     private void btnSetState_Click(object sender, EventArgs e)
     {
-      var o = (EMailState) cbStati.SelectedItem;
+      var o = (cbStati.SelectedItem as ComboboxItem<EMailState>).Value;
       SetSelezionati(o);
 
     }
@@ -302,6 +328,43 @@ namespace BulkMailSender.Views
       foreach (var mailToSend in _elencoMailInInvio)
         mailToSend.Selezionato = false;
       dataGridView1.Refresh();
+    }
+
+    private void dataGridView1_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+    {
+      var mail = (dataGridView1.Rows[e.RowIndex].DataBoundItem as MailToSend);
+      if (mail != null)
+      {
+        if (mail.State == EMailState.ErroreInInvio)
+          MessageBox.Show("Errore: " + Environment.NewLine + mail.MessaggioErrore,"Info errore",
+            MessageBoxButtons.OK,MessageBoxIcon.Error);
+        else
+          MessageBox.Show("Nessun errore riscontrato.","Info",MessageBoxButtons.OK,MessageBoxIcon.Information);
+      }
+    }
+
+    private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+    {
+      if (e.ColumnIndex == 3)
+      {
+        var s = (dataGridView1.Rows[e.RowIndex].DataBoundItem as MailToSend).State == EMailState.ErroreInInvio;
+        var s2 = (dataGridView1.Rows[e.RowIndex].DataBoundItem as MailToSend).MessaggioErrore;
+        if (s)
+        {
+          dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.Bisque;
+          dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.ForeColor = Color.Red;
+        }
+        else
+        {
+          dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.White;
+          dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.ForeColor = Color.Black;
+        }
+      }
+    }
+
+    private void btnClearLog_Click(object sender, EventArgs e)
+    {
+      tbLog.Clear();
     }
   }
 }

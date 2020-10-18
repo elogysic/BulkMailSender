@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,15 +19,19 @@ namespace BulkMailSender.Core.Model
     public string IdRecipiente { get; set; }
 
     public string Nome { get; set; }
-    public string Mail { get; set; }
+    public string Address { get; set; }
   }
 
 
   public enum EMailState
   {
+    [Description("Da inviare")]
     DaInviare,
+    [Description("Inviata con successo")]
     InviataConSuccesso,
+    [Description("Errore in invio")]
     ErroreInInvio,
+    [Description("Archiviata")]
     Archiviata,
   }
 }

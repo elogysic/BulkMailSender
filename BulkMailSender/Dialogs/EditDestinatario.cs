@@ -22,13 +22,13 @@ namespace BulkMailSender.Dialogs
     public bool Execute(IWin32Window owner, ref Destinatario dest)
     {
       tbNome.Text = dest.Nome;
-      tbMail.Text = dest.Mail;
+      tbMail.Text = dest.Address;
       tbMail.Focus();
       var dr = ShowDialog(owner);
       if (dr == DialogResult.OK)
       {
         dest.Nome = tbNome.Text.Trim();
-        dest.Mail = tbMail.Text.Trim();
+        dest.Address = tbMail.Text.Trim();
       }
 
       return dr == DialogResult.OK;

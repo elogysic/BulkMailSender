@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI.WebControls;
 using BulkMailSender.Core;
 using BulkMailSender.Core.Model;
+using BulkMailSender.Smtp;
 using Timer = System.Timers.Timer;
 
 namespace BulkMailSender.Components
@@ -19,6 +20,8 @@ namespace BulkMailSender.Components
     private Timer _timer;
     private static DateTime? _lastSendTime;
     private SmtpConfig _smtpCfg;
+    private SmartMailer _mailer;
+    private Mail _mailToSend;
     const double DELTA = 1000;
 
     public JobsScheduler(IAppRepository repo, IAppService appSvc)
@@ -34,9 +37,12 @@ namespace BulkMailSender.Components
     public void StartJob(string jobId, SmtpConfig cfg)
     {
       _smtpCfg = cfg;
+      _mailer = new SmartMailer();
+      _mailer.Configure(_smtpCfg);
       if (_job != null)
         StopJob();
 
+      _mailToSend = _appSvc.GetMailCorrente();
       var timeout = DateTime.Now.AddSeconds(15);
       while (_timer != null && _timer.Enabled)
       {
@@ -77,17 +83,40 @@ namespace BulkMailSender.Components
 
     public event SentMailEventHandler OnSentMailEvent;
 
+    static readonly object _object = new object();
+
     private static void OnTimedEvent(object source, ElapsedEventArgs e, JobsScheduler scheduler)
     {
-      if (!scheduler._job.IsRunning)
+
+      if (!Monitor.TryEnter(_object))
+        return;
+      try
       {
-        scheduler._timer.Stop();
-        scheduler.State = ESchedulerState.Stopped;
+        if (!scheduler._job.IsRunning)
+        {
+          scheduler._timer.Stop();
+          scheduler.State = ESchedulerState.Stopped;
+        }
+        else
+        {
+          scheduler.SendNextMail();
+          if (scheduler.MailTerminate())
+          {
+            scheduler.StopJob();
+          }
+        }
       }
-      else
+      finally
       {
-        scheduler.SendNextMail();
+        Monitor.Exit(_object);
       }
+    }
+
+
+    private bool MailTerminate()
+    {
+      var mail = _appSvc.GeNextMailToSend(_job.JobId);
+      return mail == null;
     }
 
     private void SendNextMail()
@@ -107,7 +136,7 @@ namespace BulkMailSender.Components
         mail.UltimoTentativoInvio = DateTime.Now;
         try
         {
-          //todo: send
+          _mailer.SendEmail(mail.Address, mail.Nome,_mailToSend.Subject,_mailToSend.HtmlBody, _mailToSend.PlaintTextBody);
           mail.State = EMailState.InviataConSuccesso;
         }
         catch (Exception exc)

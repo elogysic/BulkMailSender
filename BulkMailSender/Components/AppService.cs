@@ -29,6 +29,12 @@ namespace BulkMailSender.Components
       throw new NotImplementedException();
     }
 
+    public Mail GetMailCorrente()
+    {
+      var idMail = _stateProvider.GetCurrentMailId();
+      return _appRepo.GetMailById(idMail);
+    }
+
     public IEnumerable<Destinatario> GetDestinatariDelRecipienteCorrente()
     {
       var idRecipiente = _stateProvider.GetCurrentRecipientId();

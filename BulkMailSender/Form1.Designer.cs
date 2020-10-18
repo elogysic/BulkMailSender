@@ -31,12 +31,12 @@
       this.panel1 = new System.Windows.Forms.Panel();
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage1 = new System.Windows.Forms.TabPage();
-      this.smtpView = new BulkMailSender.Views.SmptView();
       this.tabPage2 = new System.Windows.Forms.TabPage();
-      this.recipientiView1 = new BulkMailSender.Views.RecipientiView();
       this.tabPage3 = new System.Windows.Forms.TabPage();
-      this.mailsView1 = new BulkMailSender.Views.MailsView();
       this.tabPage4 = new System.Windows.Forms.TabPage();
+      this.smtpView = new BulkMailSender.Views.SmptView();
+      this.recipientiView1 = new BulkMailSender.Views.RecipientiView();
+      this.mailsView1 = new BulkMailSender.Views.MailsView();
       this.jobsView1 = new BulkMailSender.Views.JobsView();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -50,7 +50,7 @@
       this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
       this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(1229, 43);
+      this.panel1.Size = new System.Drawing.Size(1229, 68);
       this.panel1.TabIndex = 0;
       // 
       // tabControl1
@@ -60,10 +60,10 @@
       this.tabControl1.Controls.Add(this.tabPage3);
       this.tabControl1.Controls.Add(this.tabPage4);
       this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControl1.Location = new System.Drawing.Point(0, 43);
+      this.tabControl1.Location = new System.Drawing.Point(0, 68);
       this.tabControl1.Name = "tabControl1";
       this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(1229, 616);
+      this.tabControl1.Size = new System.Drawing.Size(1229, 591);
       this.tabControl1.TabIndex = 1;
       this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
       // 
@@ -73,19 +73,10 @@
       this.tabPage1.Location = new System.Drawing.Point(4, 22);
       this.tabPage1.Name = "tabPage1";
       this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage1.Size = new System.Drawing.Size(1221, 590);
+      this.tabPage1.Size = new System.Drawing.Size(1221, 565);
       this.tabPage1.TabIndex = 0;
       this.tabPage1.Text = "SMTP Settings";
       this.tabPage1.UseVisualStyleBackColor = true;
-      // 
-      // smtpView
-      // 
-      this.smtpView.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.smtpView.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.smtpView.Location = new System.Drawing.Point(3, 3);
-      this.smtpView.Name = "smtpView";
-      this.smtpView.Size = new System.Drawing.Size(1215, 584);
-      this.smtpView.TabIndex = 0;
       // 
       // tabPage2
       // 
@@ -93,19 +84,10 @@
       this.tabPage2.Location = new System.Drawing.Point(4, 22);
       this.tabPage2.Name = "tabPage2";
       this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage2.Size = new System.Drawing.Size(1221, 590);
+      this.tabPage2.Size = new System.Drawing.Size(1221, 617);
       this.tabPage2.TabIndex = 1;
       this.tabPage2.Text = "Recipienti";
       this.tabPage2.UseVisualStyleBackColor = true;
-      // 
-      // recipientiView1
-      // 
-      this.recipientiView1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.recipientiView1.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.recipientiView1.Location = new System.Drawing.Point(3, 3);
-      this.recipientiView1.Name = "recipientiView1";
-      this.recipientiView1.Size = new System.Drawing.Size(1215, 584);
-      this.recipientiView1.TabIndex = 0;
       // 
       // tabPage3
       // 
@@ -113,19 +95,10 @@
       this.tabPage3.Location = new System.Drawing.Point(4, 22);
       this.tabPage3.Name = "tabPage3";
       this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage3.Size = new System.Drawing.Size(1221, 590);
+      this.tabPage3.Size = new System.Drawing.Size(1221, 617);
       this.tabPage3.TabIndex = 2;
       this.tabPage3.Text = "Mail";
       this.tabPage3.UseVisualStyleBackColor = true;
-      // 
-      // mailsView1
-      // 
-      this.mailsView1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.mailsView1.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.mailsView1.Location = new System.Drawing.Point(3, 3);
-      this.mailsView1.Name = "mailsView1";
-      this.mailsView1.Size = new System.Drawing.Size(1215, 584);
-      this.mailsView1.TabIndex = 0;
       // 
       // tabPage4
       // 
@@ -133,17 +106,44 @@
       this.tabPage4.Location = new System.Drawing.Point(4, 22);
       this.tabPage4.Name = "tabPage4";
       this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage4.Size = new System.Drawing.Size(1221, 590);
+      this.tabPage4.Size = new System.Drawing.Size(1221, 617);
       this.tabPage4.TabIndex = 3;
       this.tabPage4.Text = "Jobs";
       this.tabPage4.UseVisualStyleBackColor = true;
+      // 
+      // smtpView
+      // 
+      this.smtpView.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.smtpView.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.smtpView.Location = new System.Drawing.Point(3, 3);
+      this.smtpView.Name = "smtpView";
+      this.smtpView.Size = new System.Drawing.Size(1215, 559);
+      this.smtpView.TabIndex = 0;
+      // 
+      // recipientiView1
+      // 
+      this.recipientiView1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.recipientiView1.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.recipientiView1.Location = new System.Drawing.Point(3, 3);
+      this.recipientiView1.Name = "recipientiView1";
+      this.recipientiView1.Size = new System.Drawing.Size(1215, 611);
+      this.recipientiView1.TabIndex = 0;
+      // 
+      // mailsView1
+      // 
+      this.mailsView1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.mailsView1.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.mailsView1.Location = new System.Drawing.Point(3, 3);
+      this.mailsView1.Name = "mailsView1";
+      this.mailsView1.Size = new System.Drawing.Size(1215, 611);
+      this.mailsView1.TabIndex = 0;
       // 
       // jobsView1
       // 
       this.jobsView1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.jobsView1.Location = new System.Drawing.Point(3, 3);
       this.jobsView1.Name = "jobsView1";
-      this.jobsView1.Size = new System.Drawing.Size(1215, 584);
+      this.jobsView1.Size = new System.Drawing.Size(1215, 611);
       this.jobsView1.TabIndex = 0;
       // 
       // Form1

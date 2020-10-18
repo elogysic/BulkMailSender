@@ -139,9 +139,10 @@ namespace BulkMailSender.Views
     private void btnSalva_Click(object sender, EventArgs e)
     {
       var html = editorForm1.GetHtmlText();
+      var plainText = editorForm1.GetPlainText();
       var subj = tbSubject.Text;
       if (!string.IsNullOrWhiteSpace(CurrentMailId))
-        AppRepo.UpdateMail(CurrentMailId, subj, html);
+        AppRepo.UpdateMail(CurrentMailId, subj, html, plainText);
     }
 
     private void btnClear_Click(object sender, EventArgs e)

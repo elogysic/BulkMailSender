@@ -40,6 +40,11 @@ namespace BulkMailSender.Components
     {
       return editor.DocumentText;
     }
+
+    public string GetPlainText()
+    {
+      return editor.BodyText;
+    }
     #endregion
 
     private void editor_Tick()

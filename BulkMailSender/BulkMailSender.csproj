@@ -113,7 +113,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ComboboxItem.cs" />
     <Compile Include="Helpers\ConfirmBox.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Smtp\SmartMailer.cs" />

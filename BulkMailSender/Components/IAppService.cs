@@ -15,5 +15,7 @@ namespace BulkMailSender.Components
     IEnumerable<Destinatario> GetDestinatariDelRecipienteCorrente();
     MailToSend GeNextMailToSend(string jobJobId);
     void ChangeMailState(MailToSend mail);
+
+    Mail GetMailCorrente();
   }
 }

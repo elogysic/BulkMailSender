@@ -7,7 +7,7 @@ namespace BulkMailSender.Core.Model
     public string Id { get; set; }
     public string IdJob { get; set; }
     public string Nome { get; set; }
-    public string Mail { get; set; }
+    public string Address { get; set; }
     public DateTime? UltimoTentativoInvio{ get; set; }
 
     public string UltimoTentativoInvioStr => UltimoTentativoInvio == null

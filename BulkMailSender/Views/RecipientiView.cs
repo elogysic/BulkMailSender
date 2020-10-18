@@ -92,7 +92,7 @@ namespace BulkMailSender.Views
       }
       else
       {
-        var list = AppRepo.GetDestinatari((string) treeView1.SelectedNode.Tag).OrderBy(x => x.Mail.ToLower()).ToList();
+        var list = AppRepo.GetDestinatari((string) treeView1.SelectedNode.Tag).OrderBy(x => x.Address?.ToLower()).ToList();
 
         _elencoDestintari = new BindingList<Destinatario>(list);
         dataGridView1.DataSource = _elencoDestintari;
@@ -106,7 +106,7 @@ namespace BulkMailSender.Views
         Id = Guid.NewGuid().ToString("N"),
         IdRecipiente = CurrentRecipientId,
         Nome = "",
-        Mail = ""
+        Address = ""
       };
       var dlg = new EditDestinatario();
       if (dlg.Execute(this, ref dest))
@@ -209,7 +209,7 @@ namespace BulkMailSender.Views
 
     private void btnRimuoviDuplicati_Click(object sender, EventArgs e)
     {
-      var gruppi = _elencoDestintari.GroupBy(x => x.Mail.ToLower(), x => x);
+      var gruppi = _elencoDestintari.GroupBy(x => x.Address.ToLower(), x => x);
       var gruppiDoppi = gruppi.Where(x => x.Count() > 1);
       if (!gruppiDoppi.Any())
         MessageBox.Show("Non ci sono duplicati.");
@@ -263,7 +263,7 @@ namespace BulkMailSender.Views
           {
             IdRecipiente = CurrentRecipientId,
             Id = Guid.NewGuid().ToString("N"),
-            Mail = fields[0].Trim(),
+            Address = fields[0].Trim(),
           };
           if (fields.Length > 1)
             d.Nome = fields[1].Trim();
@@ -281,7 +281,7 @@ namespace BulkMailSender.Views
     {
       var d = e.Row.DataBoundItem as Destinatario;
       if (d != null)
-        MessageBox.Show("elimina " + d.Mail);
+        MessageBox.Show("elimina " + d.Address);
     }
 
     private void btnEliminaSelezionati_Click(object sender, EventArgs e)

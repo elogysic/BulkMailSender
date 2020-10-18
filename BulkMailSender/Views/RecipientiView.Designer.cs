@@ -30,6 +30,7 @@
     {
       this.components = new System.ComponentModel.Container();
       this.panel1 = new System.Windows.Forms.Panel();
+      this.label1 = new System.Windows.Forms.Label();
       this.lbNumero = new System.Windows.Forms.Label();
       this.btnAddDestinatario = new System.Windows.Forms.Button();
       this.btnRimuoviDuplicati = new System.Windows.Forms.Button();
@@ -40,11 +41,10 @@
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.treeView1 = new System.Windows.Forms.TreeView();
       this.dataGridView1 = new System.Windows.Forms.DataGridView();
+      this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.Mail = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.Elimina = new System.Windows.Forms.DataGridViewButtonColumn();
-      this.timer1 = new System.Windows.Forms.Timer(this.components);
-      this.label1 = new System.Windows.Forms.Label();
       this.panel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
@@ -68,6 +68,17 @@
       this.panel1.Name = "panel1";
       this.panel1.Size = new System.Drawing.Size(776, 68);
       this.panel1.TabIndex = 0;
+      // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label1.ForeColor = System.Drawing.Color.Navy;
+      this.label1.Location = new System.Drawing.Point(3, 4);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(90, 23);
+      this.label1.TabIndex = 2;
+      this.label1.Text = "Recipienti";
       // 
       // lbNumero
       // 
@@ -203,10 +214,14 @@
       this.dataGridView1.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_RowValidating);
       this.dataGridView1.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridView1_UserDeletedRow);
       // 
+      // timer1
+      // 
+      this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+      // 
       // Mail
       // 
       this.Mail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-      this.Mail.DataPropertyName = "Mail";
+      this.Mail.DataPropertyName = "Address";
       this.Mail.HeaderText = "Mail";
       this.Mail.Name = "Mail";
       // 
@@ -224,21 +239,6 @@
       this.Elimina.Text = "Elimina";
       this.Elimina.UseColumnTextForButtonValue = true;
       this.Elimina.Width = 44;
-      // 
-      // timer1
-      // 
-      this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-      // 
-      // label1
-      // 
-      this.label1.AutoSize = true;
-      this.label1.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label1.ForeColor = System.Drawing.Color.Navy;
-      this.label1.Location = new System.Drawing.Point(3, 4);
-      this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(90, 23);
-      this.label1.TabIndex = 2;
-      this.label1.Text = "Recipienti";
       // 
       // RecipientiView
       // 
@@ -273,10 +273,10 @@
     private System.Windows.Forms.Button btnAddDestinatario;
     private System.Windows.Forms.Timer timer1;
     private System.Windows.Forms.Label lbNumero;
+    private System.Windows.Forms.Button btnEliminaSelezionati;
+    private System.Windows.Forms.Label label1;
     private System.Windows.Forms.DataGridViewTextBoxColumn Mail;
     private System.Windows.Forms.DataGridViewTextBoxColumn Nome;
     private System.Windows.Forms.DataGridViewButtonColumn Elimina;
-    private System.Windows.Forms.Button btnEliminaSelezionati;
-    private System.Windows.Forms.Label label1;
   }
 }

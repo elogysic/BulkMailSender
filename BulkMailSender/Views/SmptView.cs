@@ -88,7 +88,9 @@ namespace BulkMailSender.Views
         mailer.Configure(_smtpCfg);
         try
         {
-          mailer.SendEmail(dlg.InputText,"Mail di test","Questo è un <b>esempio</b> di corpo mail html.</br>Inviato con BulkMailSender application.");
+          mailer.SendEmail(dlg.InputText,"Nome dest","Mail di test",
+            "Questo è un <b>esempio</b> di corpo mail html.</br>Inviato con BulkMailSender application.",
+            "Questo è un esempio di corpo mail text. Inviato con BulkMailSender application.");
         }
         catch (Exception exception)
         {
